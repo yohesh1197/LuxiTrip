@@ -43,4 +43,21 @@ public interface UserService {
 	 */
 	User retrieveUserById(int userId) throws UserException;
 
+    /**
+	 * Method used to retrieve the User in the given userName 
+	 * @param user Name
+	 * @return the given User in the user name
+	 * @throws UserException
+	 */
+	User retrieveUserByName(String userName) throws UserException;
+
+	/**
+	 * Method used to validate the user whether he is a admin or user to redirect to the specific page 
+	 * @param User details 
+	 * @param password to validate 
+	 * @return the user role
+	 * @throws UserException
+	 */
+	String redirectPage(User user, String password) throws UserException;
+
 }

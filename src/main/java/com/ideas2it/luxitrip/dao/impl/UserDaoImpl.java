@@ -3,6 +3,7 @@ package com.ideas2it.luxitrip.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;    
 import org.hibernate.Session;    
 import org.hibernate.SessionFactory;    
 import org.hibernate.Transaction;  
@@ -11,23 +12,25 @@ import org.springframework.stereotype.Repository;
 import org.hibernate.Query;
 
 import com.ideas2it.luxitrip.model.User;
-import com.ideas2it.luxitrip.util.HibernateUtil;
 import com.ideas2it.luxitrip.exception.UserException;
 import com.ideas2it.luxitrip.dao.UserDao;
 
 
 @Repository
 public class UserDaoImpl implements UserDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
 	/**
 	 * Method used to register the userDetail from user into the database 
 	 * @param user
 	 * @throws UserException
 	 */
 	public void insertUser(User user)throws UserException {
-	    Session session = null;
+	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
-	    	session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -48,10 +51,9 @@ public class UserDaoImpl implements UserDao {
 	 * @throws UserException
 	 */
 	public void updateUser(User user)throws UserException {
-		Session session = null;
+	    Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
-		    session = HibernateUtil.getSessionFactory().openSession();
 		    transaction = session.beginTransaction();
 		    session.saveOrUpdate(user);
 		    transaction.commit();
@@ -72,9 +74,8 @@ public class UserDaoImpl implements UserDao {
 	 */
     public List<User> getUsers() throws UserException {
 	    List<User> users = new ArrayList<User>();
-	    Session session = null;
+	    Session session = sessionFactory.openSession();
 	    try{    
-	        session = HibernateUtil.getSessionFactory().openSession(); 
 	        Query query = session.createQuery("from User");
 	        users = query.list();
 	    } catch(HibernateException ex) {
@@ -95,24 +96,46 @@ public class UserDaoImpl implements UserDao {
      * @return the user detail 
      * @throws UserException
      */
-    public User getUserById(int userId) throws UserException {
+    public User getUserById(int id) throws UserException {
         User user = null;
-    	Session session = null;
+	    Session session = sessionFactory.openSession();
     	try {
-    	    session = HibernateUtil.getSessionFactory().openSession();
-    		Query query = session.createQuery("from User u where u.id = : userId");
-    		query.setParameter("userId", userId);
-            user = (User) query.uniqueResult();
+            user = (User) session.get(User.class, id); 
         } catch(HibernateException ex) {
             throw new UserException("The user is not registered");
         } finally {
             try {
                 session.close(); 
-            } catch(HibernateException e) {
+            } catch(HibernateException ex) {
                 throw new UserException("Unable to close session");
             }
         }
         return user;        
+    }
+
+    /**
+     * Method used to get the User detail by using the userName 
+     * @param userName
+     * @return the user detail 
+     * @throws UserException
+     */
+    public User getUserByName(String userName) throws UserException {
+        User user = null;
+        Session session = sessionFactory.openSession();
+        try {
+            Query query = session.createQuery("from User u where u.name = : userName");
+            query.setParameter("userName", userName);
+            user = (User) query.uniqueResult();
+        } catch(HibernateException ex) {
+            throw new UserException("The user is not registered");
+        } finally {
+            try {
+                session.close();
+            } catch(HibernateException ex) {
+                throw new UserException("unable to close Session");
+            }
+        }
+        return user;
     }
     
     /**
@@ -122,12 +145,13 @@ public class UserDaoImpl implements UserDao {
      * @throws UserException
      */
     public int deleteUser(int userId) throws UserException {
-    	Session session = null;
+	    Session session = sessionFactory.openSession();
 		Transaction transaction = null;
     	int noOfRowAffected = 0;
     	try {
-            session = HibernateUtil.getSessionFactory().openSession();
-    		Query query = session.createQuery("update User u set u.status = :status where u.id = userId");
+            transaction = session.beginTransaction();
+    		Query query = session.createQuery("update User u set u.status = :status where u.id = :userId");
+            query.setBoolean("status", false);
     		query.setParameter("userId", userId);
     		noOfRowAffected = query.executeUpdate();
             transaction.commit();
@@ -148,13 +172,15 @@ public class UserDaoImpl implements UserDao {
     
     /**
      * Method used to count the number of users in the database 
+     * @return the number of Users
+     * @throws UserException
      */
     public long countUser() throws UserException {
-        Session session = null;
+	    Session session = sessionFactory.openSession();
     	Transaction transaction = null;
     	long count = 0L;
     	try {
-    	    session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
     		Query query = session.createQuery("select count(u.id) from User u ");
             count = (Long) query.iterate().next();
         } catch(HibernateException ex) {

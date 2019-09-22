@@ -51,5 +51,13 @@ public interface UserDao {
      * @throws UserException
      */
     long countUser() throws UserException;
+    
+	 /**
+     * Method used to get the User object in the specific user Name
+     * @param user name
+     * @return the user object
+     * @throws UserException
+     */
+	User getUserByName(String userName) throws UserException;
 
 }

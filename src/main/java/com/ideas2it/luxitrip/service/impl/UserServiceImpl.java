@@ -22,6 +22,8 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void createUser(User user) throws UserException {
 	    user.setRole("User");
+		user.setStatus(true);
+		System.out.println(user + "reached service");
 		userDao.insertUser(user);
 	}
 	
@@ -62,6 +64,34 @@ public class UserServiceImpl implements UserService {
 	 */
 	public User retrieveUserById(int userId) throws UserException {
 		return userDao.getUserById(userId);
+	}
+
+    /**
+	 * Method used to retrieve the User in the given userName 
+	 * @param user Name
+	 * @return the given User in the user name
+	 * @throws UserException
+	 */
+	public User retrieveUserByName(String userName) throws UserException {
+		return userDao.getUserByName(userName);
+	}
+
+    /**
+	 * Method used to validate the user whether he is a admin or user to redirect to the specific page 
+	 * @param User details 
+	 * @param password to validate 
+	 * @return the user role
+	 * @throws UserException
+	 */
+	public String redirectPage(User user, String password) throws UserException {
+		if(user.getPassword().equals(password)) {
+			if(user.getRole().equals("User")) {
+				return "User";
+			} else if(user.getRole().equals("Admin")) {
+				return "Admin";
+			}
+		}
+	    return "Invalid";
 	}
 
 }
