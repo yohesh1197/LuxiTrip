@@ -15,8 +15,15 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   <servlet-mapping>
    <servlet-name>SpringMVC</servlet-name>
    <url-pattern>/</url-pattern>
+<<<<<<< HEAD
   </servlet-mapping>
     <welcome-file-list>
         <welcome-file>jsp/stops.jsp</welcome-file>
     </welcome-file-list>    
+=======
+  </servlet-mapping>  
+  <welcome-file-list>
+    <welcome-file>jsp/AddBus.jsp</welcome-file>
+  </welcome-file-list>
+>>>>>>> Features:
 </web-app>
