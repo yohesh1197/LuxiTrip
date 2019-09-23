@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.ideas2it.luxitrip.dao.RouteDao;
 import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.Route;
-import com.ideas2it.luxitrip.model.Seat;
 
 @Repository
 public class RouteDaoImpl implements RouteDao{
@@ -52,8 +51,7 @@ public class RouteDaoImpl implements RouteDao{
     public List<Route> getAllRoutes() throws CustomException {
         Session session = sessionFactory.openSession();
         try {
-            List routes = session.createQuery("FROM Route").list(); 
-            return routes;
+            return session.createQuery("FROM Route").list(); 
         } catch (HibernateException exception) {
             throw new CustomException("Unable to get Route" + exception);
         } finally {
@@ -112,7 +110,7 @@ public class RouteDaoImpl implements RouteDao{
      * Deletes the route by setting the status to false
      * @param Route object which is to be deleted
      */
-    public void deleteRoute(int id) throws CustomException{
+    public void deleteRoute(int id) throws CustomException {
         Session session = sessionFactory.openSession();
         Transaction transact = null;
         try {

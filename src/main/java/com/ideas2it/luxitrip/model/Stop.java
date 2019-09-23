@@ -11,8 +11,8 @@ public class Stop {
 	@Id
     @Column(name  = "id")
 	private int id;
-
-	@Column(name = "name")
+	
+	@Column(name = "name",length = 20, nullable = true)
 	private String name;
 	
 	public int getId() {

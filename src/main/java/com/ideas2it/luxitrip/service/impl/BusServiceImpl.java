@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ideas2it.luxitrip.dao.BusDao;
-import com.ideas2it.luxitrip.dao.impl.BusDaoImpl;
 import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.Bus;
 import com.ideas2it.luxitrip.model.Seat;

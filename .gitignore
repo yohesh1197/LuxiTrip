@@ -20,6 +20,7 @@
 *.rar
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 *.classpath
 *.project
 # Maven Built target folder
@@ -33,6 +34,9 @@
 
 >>>>>>> Stop module
 =======
+=======
+.classpath
+>>>>>>> Features Added
 
 # Maven Built target folder
 /target/

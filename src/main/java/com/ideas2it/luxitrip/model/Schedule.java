@@ -38,7 +38,7 @@ public class Schedule {
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="midway_id")
     private List<Midway> midways;
-
+    
     public int getId() {
         return id;
     }

@@ -1,7 +1,6 @@
 package com.ideas2it.luxitrip.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.Bus;
-import com.ideas2it.luxitrip.model.Seat;
 import com.ideas2it.luxitrip.service.BusService;
 
 @Controller
@@ -45,7 +43,7 @@ public class BusController {
             throws IOException, ServletException {
         try {
             int capacity = Integer.parseInt(request.getParameter("capacity"));
-            int count = 1;
+            //int count = 1;
             bus.setBusNumber(request.getParameter("busNumber"));
             bus.setCapacity(capacity);
             bus.setOperator(request.getParameter("operator"));

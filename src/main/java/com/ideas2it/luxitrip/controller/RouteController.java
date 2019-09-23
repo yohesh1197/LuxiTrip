@@ -1,8 +1,6 @@
 package com.ideas2it.luxitrip.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException; 
@@ -16,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
   
 import com.ideas2it.luxitrip.exception.CustomException; 
-import com.ideas2it.luxitrip.model.Route;
-import com.ideas2it.luxitrip.model.Schedule;
+
 import com.ideas2it.luxitrip.model.Route;
 import com.ideas2it.luxitrip.service.RouteService; 
 import com.ideas2it.luxitrip.service.StopService;
@@ -40,7 +37,8 @@ public class RouteController {
                       (Integer.parseInt(request.getParameter("origin"))));
           route.setDestination(stopService.displayStop
                       (Integer.parseInt(request.getParameter("destination"))));    
-          routeService.createRoute(route); return displayAllRoutes(request,response); 
+          routeService.createRoute(route); 
+          return displayAllRoutes(request,response); 
       } catch (CustomException exception) { 
           return (new ModelAndView("ErrorPage","error",exception)); 
       } 

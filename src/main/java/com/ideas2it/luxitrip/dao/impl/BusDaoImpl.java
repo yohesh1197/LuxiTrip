@@ -1,15 +1,11 @@
 package com.ideas2it.luxitrip.dao.impl;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.hibernate.cfg.Configuration;
 import org.hibernate.HibernateException; 
-import org.hibernate.query.Query;
 import org.hibernate.Session; 
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -20,7 +16,6 @@ import org.springframework.stereotype.Repository;
 import com.ideas2it.luxitrip.dao.BusDao;
 import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.Bus;
-import com.ideas2it.luxitrip.model.Seat;
 
 @Repository
 public class BusDaoImpl implements BusDao{
@@ -60,11 +55,11 @@ public class BusDaoImpl implements BusDao{
     }
     
     
+    @SuppressWarnings("unchecked")
     public List<Bus> getAllBuses() throws CustomException {
     	Session session = sessionFactory.openSession();
     	try {
-            List buses = session.createQuery("FROM Bus").list(); 
-            return buses;
+            return (session.createQuery("FROM Bus").list()); 
     	} catch (HibernateException exception) {
             throw new CustomException("Unable to get Bus" + exception);
         } finally {

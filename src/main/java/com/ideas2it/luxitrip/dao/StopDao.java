@@ -2,19 +2,6 @@ package com.ideas2it.luxitrip.dao;
 
 import java.util.List;
 
-import javax.persistence.OptimisticLockException;
-
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.LazyInitializationException;
-import org.hibernate.Session;
-import org.hibernate.SessionException;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.Stop;
 

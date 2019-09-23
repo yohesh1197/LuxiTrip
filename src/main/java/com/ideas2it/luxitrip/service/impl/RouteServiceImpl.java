@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.ideas2it.luxitrip.dao.RouteDao;
 import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.Route;
-import com.ideas2it.luxitrip.model.Seat;
 import com.ideas2it.luxitrip.service.RouteService;
 
 @Service
