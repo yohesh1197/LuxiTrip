@@ -109,7 +109,7 @@ public class UserController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/displayUserToUpdate")
-	public ModelAndView getUser(HttpServletRequest request, HttpServletResponse response) 
+	public ModelAndView getUserById(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
         int userId = (Integer.parseInt(request.getParameter("userId")));
         try {

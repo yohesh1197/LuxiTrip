@@ -97,10 +97,10 @@ public class UserDaoImpl implements UserDao {
      * @throws UserException
      */
     public User getUserById(int id) throws UserException {
-        User user = null;
 	    Session session = sessionFactory.openSession();
     	try {
-            user = (User) session.get(User.class, id); 
+            User user = session.get(User.class, id); 
+            return user;
         } catch(HibernateException ex) {
             throw new UserException("The user is not registered");
         } finally {
@@ -109,8 +109,7 @@ public class UserDaoImpl implements UserDao {
             } catch(HibernateException ex) {
                 throw new UserException("Unable to close session");
             }
-        }
-        return user;        
+        }       
     }
 
     /**
