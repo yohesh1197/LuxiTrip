@@ -2,10 +2,11 @@ package com.ideas2it.luxitrip.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;  
 
-import com.ideas2it.luxitrip.dao.impl.UserDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.stereotype.Service;
+
+import com.ideas2it.luxitrip.dao.UserDao;
 import com.ideas2it.luxitrip.model.User;
 import com.ideas2it.luxitrip.exception.UserException;
 import com.ideas2it.luxitrip.service.UserService;
@@ -13,7 +14,7 @@ import com.ideas2it.luxitrip.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
-	private UserDaoImpl userDao;
+	private UserDao userDao;
 	
 	/**
 	 * Method used to create the User with the User detail 

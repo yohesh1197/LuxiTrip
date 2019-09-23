@@ -21,7 +21,7 @@
                   <form  action="validateUser" autocomplete="on">
                      <h1>Log in</h1>
                      <p> 
-                        <label for="username" class="uname" >Email or Mobile </label>
+                        <label for="username" class="uname" >User Name</label>
                         <input id="username" name="userName" required="required" type="text" placeholder="mymail@mail.com or xxxxxxxxxx"/>
                      </p>
                      <p> 
@@ -67,6 +67,10 @@
                      <label>Password </label>
                      <input required="required" type="password" name="password" placeholder="X8df!90EO"/>
                      </p>
+                     <center><%if(request.getAttribute("message") != null) {%>
+        <%=request.getAttribute("message")%></center>
+        <%}%>
+                     
                      <p class="signin button"> 
                         <input type="submit" value="Sign up"/> 
                      </p>

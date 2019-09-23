@@ -6,10 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse; 
-import javax.servlet.annotation.WebServlet;  
-import javax.servlet.http.HttpServlet;  
 import javax.servlet.http.HttpSession; 
-import javax.servlet.RequestDispatcher;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;    
@@ -17,24 +14,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;   
 import org.springframework.web.bind.annotation.RequestMapping; 
 
-import com.ideas2it.luxitrip.service.impl.UserServiceImpl;
+import com.ideas2it.luxitrip.service.UserService;
 import com.ideas2it.luxitrip.model.User;
 import com.ideas2it.luxitrip.exception.UserException;
 
 @Controller
 public class UserController {
+	
 	@Autowired
-	private UserServiceImpl userService;
-
+	private UserService userService;
+	
     /**
 	 * Method used to validate the user by using the userName and password in the database
-	 * @param request
+	 * @param request{@link HttpServletRequest}
 	 * @param response
 	 * @return the confirmation to the User 
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-    @RequestMapping("validateUser")
+    @RequestMapping("/validateUser")
 	public ModelAndView validateUser(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
         try {
@@ -43,7 +41,9 @@ public class UserController {
 			User user = userService.retrieveUserByName(name);
 			String role = userService.redirectPage(user, password); 
 			if(role.equals("Admin")) {
-
+				HttpSession session = request.getSession();
+                session.setAttribute("userId", user.getId());
+                return new ModelAndView("adminPage", "user", user);
 			} else if(role.equals("User")) {
 				HttpSession session = request.getSession();
                 session.setAttribute("userId", user.getId());
@@ -54,7 +54,6 @@ public class UserController {
 		} catch(UserException ex) {
 			return new ModelAndView("Message", "message", "User name and password is wrong");
 		}
-		return new ModelAndView("Message", "message", "Reach agala");
 	}
 	/**
 	 * Method used to register the user and its detail in the database
@@ -80,7 +79,7 @@ public class UserController {
 			userService.createUser(user);
 		    return new ModelAndView("Message", "message", "User Added Successfully");
 		} catch (UserException ex) {
-		    return new ModelAndView("error",  "error", ex);
+		    return new ModelAndView("login",  "message", ex.getMessage());
 		}
     }
 	
@@ -109,7 +108,7 @@ public class UserController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/displayUserToUpdate")
-	public ModelAndView getUser(HttpServletRequest request, HttpServletResponse response) 
+	public ModelAndView getUserById(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
         int userId = (Integer.parseInt(request.getParameter("userId")));
         try {
@@ -133,7 +132,7 @@ public class UserController {
 	    String name = request.getParameter("userName");
 		try {
 			User user = userService.retrieveUserByName(name);
-			return new ModelAndView("", "user", user);
+			return new ModelAndView("cinemax", "user", user);
 		} catch(UserException ex) {
 			return new ModelAndView("error", "error", ex);
 		}
