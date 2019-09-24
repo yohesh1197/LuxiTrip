@@ -44,17 +44,17 @@
                     <td><c:out value="${user.status}" /></td>
                     <td>
                        <form action = "getUser" method = "post">
-                       <input type = "hidden" name = "userId" value = '${user.userId}'/>
+                       <input type = "hidden" name = "userId" value = '${user.id}'/>
                        <button class="btn" type = "submit"><i class="fa fa-edit"></i></button>
                        </form>
                        <form action = "deleteUser" method = "post">
-                       <input type = "hidden" name = "userId" value = '${user.userId}'/>
+                       <input type = "hidden" name = "userId" value = '${user.id}'/>
                         <button class="btn" type = "submit"><i class="fa fa-trash"></i></button>
                        </form>
                     </td>
                        <td>
                        <form action = "selectMovies" method = "post" modelAttribute="user"> 
-                       <input type = "hidden" name = "userId" value = '${user.userId}'/>
+                       <input type = "hidden" name = "userId" value = '${user.id}'/>
                        <button class = "btn" type = "submit"><i class="fa fa-ticket"></i></button>
                        </form>
                        </td>

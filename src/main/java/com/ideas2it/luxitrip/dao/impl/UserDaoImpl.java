@@ -3,17 +3,19 @@ package com.ideas2it.luxitrip.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;    
-import org.hibernate.Session;    
-import org.hibernate.SessionFactory;    
-import org.hibernate.Transaction;  
-import org.hibernate.HibernateException;
-import org.springframework.stereotype.Repository;
-import org.hibernate.Query;
+import javax.persistence.PersistenceException;
 
-import com.ideas2it.luxitrip.model.User;
-import com.ideas2it.luxitrip.exception.UserException;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.ideas2it.luxitrip.dao.UserDao;
+import com.ideas2it.luxitrip.exception.UserException;
+import com.ideas2it.luxitrip.model.User;
 
 
 @Repository
@@ -34,9 +36,11 @@ public class UserDaoImpl implements UserDao {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-        } catch (HibernateException ex) {
+        }  catch (HibernateException ex) {
             throw new UserException("Unable to add " + user.getId() + " value" + ex);
-        } finally {
+        } catch(PersistenceException ex) {
+        	throw new UserException("UserName is already exists please try another name");
+	    } finally {
             try {
                 session.close(); 
             } catch(Exception ex) {
@@ -97,10 +101,10 @@ public class UserDaoImpl implements UserDao {
      * @throws UserException
      */
     public User getUserById(int id) throws UserException {
-        User user = null;
 	    Session session = sessionFactory.openSession();
     	try {
-            user = (User) session.get(User.class, id); 
+            User user = session.get(User.class, id); 
+            return user;
         } catch(HibernateException ex) {
             throw new UserException("The user is not registered");
         } finally {
@@ -109,8 +113,7 @@ public class UserDaoImpl implements UserDao {
             } catch(HibernateException ex) {
                 throw new UserException("Unable to close session");
             }
-        }
-        return user;        
+        }       
     }
 
     /**
