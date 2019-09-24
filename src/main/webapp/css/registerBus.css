@@ -36,7 +36,7 @@ html,body {
       .banner {
       position: relative;
       height: 350px;
-      background-image: url("/home/ubuntu/LuxiTrip-dev/src/main/webapp/img/bus.jpeg");  
+      background-image: url("../img/bus.jpeg");  
       background-size: cover;
       display: flex;
       justify-content: center;
@@ -129,7 +129,7 @@ html,body {
       padding: 10px;
       border: none;
       border-radius: 5px; 
-      background: #6b4724;
+      background: rgb(61, 157, 179);
       font-size: 16px;
       color: #fff;
       cursor: pointer;
