@@ -19,6 +19,7 @@
 *.tar.gz
 *.rar
 <<<<<<< HEAD
+<<<<<<< HEAD
 *.classpath
 *.project
 # Maven Built target folder
@@ -31,5 +32,11 @@
 /LuxiTrip/
 
 >>>>>>> Stop module
+=======
+
+# Maven Built target folder
+/target/
+
+>>>>>>> Features:
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
