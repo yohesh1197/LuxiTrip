@@ -89,7 +89,7 @@ public class UserController {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	@RequestMapping("/displayUsers")
+	@RequestMapping("/Users")
 	public ModelAndView displayUsers() throws ServletException, IOException {
 	    try {
 		    List<User> users = userService.retrieveUsers();
@@ -145,6 +145,7 @@ public class UserController {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
+	@RequestMapping("/update") 
 	public ModelAndView updateUser(@ModelAttribute("user")User user) 
 			throws ServletException, IOException {
 		try {

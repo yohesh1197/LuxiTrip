@@ -36,7 +36,7 @@ html,body {
       .banner {
       position: relative;
       height: 350px;
-      background-image: url("/home/ubuntu/LuxiTrip-dev/src/main/webapp/img/images.jpeg");  
+      background-image: url("../img/driver.jpg");  
       background-size: cover;
       display: flex;
       justify-content: center;
@@ -149,4 +149,4 @@ html,body {
       .city-item select {
       width: calc(30% - 8px);
       }
-      }@charset "UTF-8";
+      }
