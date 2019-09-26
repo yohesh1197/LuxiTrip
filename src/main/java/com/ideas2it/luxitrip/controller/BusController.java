@@ -1,14 +1,11 @@
 package com.ideas2it.luxitrip.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,30 +23,25 @@ public class BusController {
 @Autowired
     private BusServiceImpl busService = new BusServiceImpl();
 
-    /**
-     * Gets the bus details from the user in jsp page and sets it the 
-     * bus object which is added to the buses list
-     * @param request contains the bus details to be added to the object
-     */
     @RequestMapping("/registerBus")
     public ModelAndView registerBus(HttpServletRequest request, 
             HttpServletResponse response, Bus bus)
             throws IOException, ServletException {
         try {
+            int capacity = Integer.parseInt(request.getParameter("capacity"));
+            //int count = 1;
             bus.setBusNumber(request.getParameter("busNumber"));
-            bus.setCapacity(Integer.parseInt(request.getParameter("capacity")));
+            bus.setCapacity(capacity);
             bus.setOperator(request.getParameter("operator"));
+            bus.setType(request.getParameter("type"));
             bus.setStatus(true);
-            Seat seat = new Seat();
-            seat.setSeatNumber(request.getParameter("seatNumber"));
-            seat.setType(request.getParameter("type"));
-            seat.setAvailability(true);
-            busService.addSeat(bus,seat);
-            Seat seat1 = new Seat();
-            seat1.setSeatNumber(request.getParameter("seatNumber1"));
-            seat1.setType(request.getParameter("type1"));
-            seat.setAvailability(true);
-            busService.addSeat(bus,seat1);
+            /*do {
+                Seat seat = new Seat();
+                seat.setNumber(request.getParameter("number"+count) );
+                seat.setType(request.getParameter("type"+count) );
+                seat.setAvailability(true);  
+                busService.addSeat(bus,seat);
+            } while (capacity != count++);*/
             busService.createBus(bus);
             return displayAllBuses(request,response);
         } catch (CustomException exception) {
@@ -60,7 +52,7 @@ public class BusController {
     @RequestMapping("/fetchBus")
     public ModelAndView fetchBus(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, ServletException {
-        ModelAndView model = new ModelAndView("AddBus");
+        ModelAndView model = new ModelAndView("admin");
         try {
             Bus bus = 
                 busService.retrieveBusById(Integer.parseInt(request.getParameter("id")));
@@ -103,15 +95,8 @@ public class BusController {
             bus.setBusNumber(request.getParameter("busNumber"));
             bus.setCapacity(Integer.parseInt(request.getParameter("capacity")));
             bus.setOperator(request.getParameter("operator"));
+            bus.setType(request.getParameter("type"));
             bus.setStatus(true);
-            Seat seat = bus.getSeats().get(0);
-            seat.setSeatNumber(request.getParameter("seatNumber"));
-            seat.setType(request.getParameter("type"));
-            seat.setAvailability(true);
-            Seat seat1 = bus.getSeats().get(1);
-            seat1.setSeatNumber(request.getParameter("seatNumber1"));
-            seat1.setType(request.getParameter("type1"));
-            seat1.setAvailability(true);
             busService.updateBus(bus);
             return displayAllBuses(request,response);
         } catch(CustomException exception) {

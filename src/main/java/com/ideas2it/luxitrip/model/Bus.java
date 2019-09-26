@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import org.hibernate.annotations.Proxy;
 import javax.persistence.Table;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class Bus {
     @Column(name = "id", length=11, nullable=false, unique=true)
     private int id;
 	
-    @Column(name = "bus_number", length=20, nullable=true)
+    @Column(name = "bus_number", length=20, nullable=true, unique = true)
 	private String busNumber;
 	
     @Column(name = "capacity", length=11, nullable=true)
@@ -40,6 +39,10 @@ public class Bus {
     
     @Column(name = "status", length=20, nullable=true)
     private boolean status;
+    
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="bus_id")
+    private List<Seat> seats = new ArrayList<>();
 	
     public String getType() {
         return type;
@@ -53,34 +56,6 @@ public class Bus {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="bus_id")
-	private List<Seat> seats = new ArrayList<>();
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getBusNumber() {
-		return busNumber;
-	}
-	public void setBusNumber(String busNumber) {
-		this.busNumber = busNumber;
-	}
-	public int getCapacity() {
-		return capacity;
-	}
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-	public String getOperator() {
-		return operator;
-	}
-	public void setOperator(String operator) {
-		this.operator = operator;
-	}
 	public List<Seat> getSeats() {
 		return seats;
 	}

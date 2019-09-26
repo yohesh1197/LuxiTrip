@@ -2,6 +2,7 @@ package com.ideas2it.luxitrip.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,9 @@ public class Seat {
     @Column(name = "seat_number", length=20, nullable=true)
     private String seatNumber;
     
+    @Column(name = "number", length=20, nullable=true)
+    private String number;
+    
     @Column(name = "type", length=20, nullable=true)
     private String type;
     
@@ -53,11 +57,13 @@ public class Seat {
 	public void setBus(Bus bus) {
 		this.bus = bus;
 	}
+
 	public String getSeatNumber() {
 		return seatNumber;
 	}
 	public void setSeatNumber(String seatNumber) {
 		this.seatNumber = seatNumber;
+
 	}
 	public String getType() {
 		return type;

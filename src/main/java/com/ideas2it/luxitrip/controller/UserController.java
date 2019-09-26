@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ideas2it.luxitrip.service.UserService;
 import com.ideas2it.luxitrip.model.User;
-import com.ideas2it.luxitrip.exception.UserException;
+import com.ideas2it.luxitrip.exception.CustomException;
 
 @Controller
 public class UserController {
@@ -51,7 +51,7 @@ public class UserController {
 			} else {
 				return new ModelAndView("Message", "message", "Your emailId and password is Wrong");
 			}
-		} catch(UserException ex) {
+		} catch(CustomException ex) {
 			return new ModelAndView("Message", "message", "User name and password is wrong");
 		}
 	}
@@ -78,7 +78,7 @@ public class UserController {
 			user.setEmailId(emailId);
 			userService.createUser(user);
 		    return new ModelAndView("Message", "message", "User Added Successfully");
-		} catch (UserException ex) {
+		} catch (CustomException ex) {
 		    return new ModelAndView("login",  "message", ex.getMessage());
 		}
     }
@@ -94,7 +94,7 @@ public class UserController {
 	    try {
 		    List<User> users = userService.retrieveUsers();
 		    return new ModelAndView("userPage", "users", users);
-		} catch (UserException ex) {
+		} catch (CustomException ex) {
 			return new ModelAndView("error", "error", ex);
 		}
 	}
@@ -114,7 +114,7 @@ public class UserController {
         try {
         	User user = userService.retrieveUserById(userId);
         	return new ModelAndView("updateUserForm", "user", user);
-        } catch(UserException ex) {
+        } catch(CustomException ex) {
         	return new ModelAndView("error", "error", ex);
         }
 	}
@@ -133,7 +133,7 @@ public class UserController {
 		try {
 			User user = userService.retrieveUserByName(name);
 			return new ModelAndView("cinemax", "user", user);
-		} catch(UserException ex) {
+		} catch(CustomException ex) {
 			return new ModelAndView("error", "error", ex);
 		}
 	}
@@ -151,7 +151,7 @@ public class UserController {
 		try {
 	 	    userService.updateUser(user);
 		    return new ModelAndView("Message", "message", "User updated successfully");
-	    } catch(UserException ex) {
+	    } catch(CustomException ex) {
 	    	return new ModelAndView("error", "error", ex);
 	    }
 	}
@@ -170,7 +170,7 @@ public class UserController {
 	    try {
 	    	userService.deleteUser(userId);
 	    	return new ModelAndView("Message", "message", "User deleted Successfully");
-	    } catch(UserException ex) {
+	    } catch(CustomException ex) {
 	    	return new ModelAndView("error", "error", ex);
 	    }
 	}

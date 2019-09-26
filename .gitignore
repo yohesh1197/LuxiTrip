@@ -20,6 +20,10 @@
 *.rar
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> vishnu-i2i-dev
 *.classpath
 *.project
 # Maven Built target folder
@@ -33,6 +37,12 @@
 
 >>>>>>> Stop module
 =======
+<<<<<<< HEAD
+=======
+=======
+.classpath
+>>>>>>> Features Added
+>>>>>>> vishnu-i2i-dev
 
 # Maven Built target folder
 /target/

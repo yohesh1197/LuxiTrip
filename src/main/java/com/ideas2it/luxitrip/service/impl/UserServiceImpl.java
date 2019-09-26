@@ -1,6 +1,5 @@
 package com.ideas2it.luxitrip.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;  
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ideas2it.luxitrip.dao.UserDao;
 import com.ideas2it.luxitrip.model.User;
-import com.ideas2it.luxitrip.exception.UserException;
+import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.service.UserService;
 
 @Service
@@ -19,9 +18,9 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * Method used to create the User with the User detail 
 	 * @param User it get the user detail to store
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public void createUser(User user) throws UserException {
+	public void createUser(User user) throws CustomException {
 	    user.setRole("User");
 		user.setStatus(true);
 		System.out.println(user + "reached service");
@@ -31,29 +30,29 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * Method used to delete the user from the stroage in the given UserId
 	 * @param userId
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public void deleteUser(int userId) throws UserException {
+	public void deleteUser(int userId) throws CustomException {
 		if(0 == userDao.deleteUser(userId)) {
-			throw new UserException("Unable to delete " + userId);
+			throw new CustomException("Unable to delete " + userId);
 		}
 	}
 	
 	/**
 	 * Method used to update the userDetail from the existing detail
 	 * @param user
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public void updateUser(User user) throws UserException {
+	public void updateUser(User user) throws CustomException {
 		userDao.updateUser(user);
 	}
 	
     /**
      * Method used to retrieve the List of users in the database in form of list	
      * @return the list of users
-     * @throws UserException
+     * @throws CustomException
      */
-	public List<User> retrieveUsers() throws UserException {
+	public List<User> retrieveUsers() throws CustomException {
 		return userDao.getUsers();
 	}
 	
@@ -61,9 +60,9 @@ public class UserServiceImpl implements UserService {
 	 * Method used to retrieve the User in the given userId
 	 * @param userId
 	 * @return the given User in the userId
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public User retrieveUserById(int userId) throws UserException {
+	public User retrieveUserById(int userId) throws CustomException {
 		return userDao.getUserById(userId);
 	}
 
@@ -71,9 +70,9 @@ public class UserServiceImpl implements UserService {
 	 * Method used to retrieve the User in the given userName 
 	 * @param user Name
 	 * @return the given User in the user name
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public User retrieveUserByName(String userName) throws UserException {
+	public User retrieveUserByName(String userName) throws CustomException {
 		return userDao.getUserByName(userName);
 	}
 
@@ -82,9 +81,9 @@ public class UserServiceImpl implements UserService {
 	 * @param User details 
 	 * @param password to validate 
 	 * @return the user role
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public String redirectPage(User user, String password) throws UserException {
+	public String redirectPage(User user, String password) throws CustomException {
 		if(user.getPassword().equals(password)) {
 			if(user.getRole().equals("User")) {
 				return "User";

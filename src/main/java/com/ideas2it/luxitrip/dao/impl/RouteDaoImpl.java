@@ -1,79 +1,59 @@
 package com.ideas2it.luxitrip.dao.impl;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.HibernateException; 
+import org.hibernate.Session; 
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ideas2it.luxitrip.dao.IBusDao;
+import com.ideas2it.luxitrip.dao.RouteDao;
 import com.ideas2it.luxitrip.exception.CustomException;
-import com.ideas2it.luxitrip.model.Bus;
-import com.ideas2it.luxitrip.model.Seat;
-import com.ideas2it.luxitrip.util.HibernateUtil;
+import com.ideas2it.luxitrip.model.Route;
 
 @Repository
-public class BusDaoImpl implements BusDao{
-	
+public class RouteDaoImpl implements RouteDao{
+    
     @Autowired
     private SessionFactory sessionFactory;
     
-    public int insertBus(Bus bus) throws CustomException {
-        int busId = 1;
+    public int insertRoute(Route route) throws CustomException {
+        int routeId = 1;
         Session session = sessionFactory.openSession();
         System.out.println(session);
-    	Transaction transact = null;
-    	List<Bus> buses = new ArrayList<>();
-    	try {
+        Transaction transact = null;
+        List<Route> routes = new ArrayList<>();
+        try {
             transact = session.beginTransaction();
-            busId = (int)session.save(bus);
-            buses.add(bus);
+            routeId = (int)session.save(route);
+            routes.add(route);
             transact.commit();
         } catch (HibernateException exception) {
             if (transact!=null) {
                 transact.rollback();
             }
-            throw new CustomException("Bus already Exists" + exception);
-        } catch (PersistenceException exception) {
-            if (transact!=null) {
-                transact.rollback();
-            }
-            throw new CustomException("Unable to add Bus " + exception);
-        }  finally {
+            throw new CustomException("Unable to add Route " + exception);
+        } finally {
             try {
                 session.close();
             } catch (Exception e) {
                 System.out.println(e);
             } 
         }
-        return busId;
+        return routeId;
     }
     
-    @SuppressWarnings("unchecked")
-    public List<Bus> getAllBuses() throws CustomException {
-    	Session session = sessionFactory.openSession();
-    	try {
-            return (session.createQuery("FROM Bus").list()); 
-    	} catch (HibernateException exception) {
-            throw new CustomException("Unable to get Bus" + exception);
-        } finally {
-            try {
-                session.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-    }
     
-    public Bus getBusById(int id) throws CustomException {
+    public List<Route> getAllRoutes() throws CustomException {
         Session session = sessionFactory.openSession();
-        Bus bus = null;
         try {
-            bus = session.get(Bus.class , id);
+            return session.createQuery("FROM Route").list(); 
         } catch (HibernateException exception) {
-            throw new CustomException("Unable to get Bus" + exception);
+            throw new CustomException("Unable to get Route" + exception);
         } finally {
             try {
                 session.close();
@@ -81,26 +61,42 @@ public class BusDaoImpl implements BusDao{
                 System.out.println(e);
             }
         }
-        return bus;
+    }
+    
+    public Route getRouteById(int id) throws CustomException {
+        Session session = sessionFactory.openSession();
+        Route route = null;
+        try {
+            route = session.get(Route.class , id);
+        } catch (HibernateException exception) {
+            throw new CustomException("Unable to get Route" + exception);
+        } finally {
+            try {
+                session.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return route;
     }
     
     /**
-     * Replaces the entry with matching bus Id with the new data contained 
-     * in the bus object
-     * @param POJO object Bus to be updated in database table
+     * Replaces the entry with matching route Id with the new data contained 
+     * in the route object
+     * @param POJO object Route to be updated in database table
      */    
-    public void updateBus(Bus bus) throws CustomException{
+    public void updateRoute(Route route) throws CustomException{
         Session session = sessionFactory.openSession();
         Transaction transact = null;
         try {
             transact = session.beginTransaction();
-            session.update(bus); 
+            session.update(route); 
             transact.commit();
         } catch (HibernateException exception) {
             if (transact!=null) {
                 transact.rollback();
             }
-            throw new CustomException("Unable to update Bus" + exception);
+            throw new CustomException("Unable to update Route" + exception);
         } finally {
             try {
                 session.close();
@@ -111,21 +107,21 @@ public class BusDaoImpl implements BusDao{
     }
     
     /**
-     * Deletes the bus by setting the status to false
-     * @param Bus object which is to be deleted
+     * Deletes the route by setting the status to false
+     * @param Route object which is to be deleted
      */
-    public void deleteBus(Bus bus) throws CustomException{
+    public void deleteRoute(int id) throws CustomException {
         Session session = sessionFactory.openSession();
         Transaction transact = null;
         try {
             transact = session.beginTransaction();
-            session.update(bus);
+            session.update(id);
             transact.commit();
         } catch (HibernateException exception) {
             if (transact!=null) {
                 transact.rollback();
             }
-            throw new CustomException("Unable to Delete Bus" + exception);
+            throw new CustomException("Unable to Delete Route" + exception);
         } finally {
             try {
                 session.close();
@@ -133,5 +129,6 @@ public class BusDaoImpl implements BusDao{
                 System.out.println(e);
             }
         }
-    }
+    }   
+
 }
