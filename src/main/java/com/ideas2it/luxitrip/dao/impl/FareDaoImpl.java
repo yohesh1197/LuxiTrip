@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.hibernate.Query;
 
 import com.ideas2it.luxitrip.dao.FareDao;
-import com.ideas2it.luxitrip.exception.UserException;
+import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.Fare;
 import com.ideas2it.luxitrip.model.User;
 
@@ -25,9 +25,9 @@ public class FareDaoImpl implements FareDao {
 	/**
 	 * Method used to insert the fare and its details into the database
 	 * @param fare
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-    public void insertFare(Fare fare)throws UserException {
+    public void insertFare(Fare fare)throws CustomException {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
@@ -35,12 +35,12 @@ public class FareDaoImpl implements FareDao {
             session.save(fare);
             transaction.commit();
         } catch (HibernateException ex) {
-            throw new UserException("Unable to add " + fare.getId() + " value" + ex);
+            throw new CustomException("Unable to add " + fare.getId() + " value" + ex);
         } finally {
             try {
                 session.close(); 
             } catch(Exception ex) {
-                throw new UserException("Unable to close session");
+                throw new CustomException("Unable to close session");
             }
         }
     } 
@@ -48,9 +48,9 @@ public class FareDaoImpl implements FareDao {
 	/**
 	 * Method used to update the detail of fare in the database 
 	 * @param fare
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public void updateFare(Fare fare)throws UserException {
+	public void updateFare(Fare fare) throws CustomException {
 	    Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -58,12 +58,12 @@ public class FareDaoImpl implements FareDao {
 		    session.saveOrUpdate(fare);
 		    transaction.commit();
 		} catch(HibernateException ex) {
-			throw new UserException("Unable to update" + fare.getId() + "values");
+			throw new CustomException("Unable to update" + fare.getId() + "values");
 		} finally {
 			try {
 				session.close();
 			} catch(Exception ex) {
-				throw new UserException("Unable to close session");
+				throw new CustomException("Unable to close session");
 			}
 		}
 	}
@@ -72,9 +72,9 @@ public class FareDaoImpl implements FareDao {
 	 * Method used to delete the given fare from the table 
 	 * @param fareId
 	 * @return the number of affected in table in integer 
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public int deleteFare(int fareId) throws UserException {
+	public int deleteFare(int fareId) throws CustomException {
 	    Session session = sessionFactory.openSession();
 		Transaction transaction = null;
     	int noOfRowAffected = 0;
@@ -89,12 +89,12 @@ public class FareDaoImpl implements FareDao {
             if(null != transaction) {
                 transaction.rollback();
             }
-            throw new UserException("Unable to delete the given Fare");
+            throw new CustomException("Unable to delete the given Fare");
         } finally {
             try {
                 session.close(); 
             } catch(HibernateException e) {
-                throw new UserException("Unable to close session");
+                throw new CustomException("Unable to close session");
             }
         }
         return noOfRowAffected;
@@ -103,21 +103,21 @@ public class FareDaoImpl implements FareDao {
 	/**
 	 * Method to get the List of fares in the form of list 
 	 * @return the fare details in list
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-    public List<Fare> getFares() throws UserException {
+    public List<Fare> getFares() throws CustomException {
 	    List<Fare> fares = new ArrayList<Fare>();
 		Session session = sessionFactory.openSession();
 		try{    
 		    Query query = session.createQuery("from Fare");
 		    fares = query.list();
 		} catch(HibernateException ex) {
-		    throw new UserException("Unable to get all fares");
+		    throw new CustomException("Unable to get all fares");
 		} finally {
 		    try {
 		        session.close(); 
 		    } catch(HibernateException ex) {
-		        throw new UserException("Unable to close session");
+		        throw new CustomException("Unable to close session");
 		    }
 		}
         return fares;        
@@ -127,20 +127,20 @@ public class FareDaoImpl implements FareDao {
      * Method used to get the fare detail by using the specific fare id
      * @param id
      * @return the fare detail
-     * @throws UserException
+     * @throws CustomException
      */
-    public Fare getFareById(int id) throws UserException {
+    public Fare getFareById(int id) throws CustomException {
 	    Session session = sessionFactory.openSession();
     	try {
             Fare fare = session.get(Fare.class, id); 
             return fare;
         } catch(HibernateException ex) {
-            throw new UserException("The Fare is not registered");
+            throw new CustomException("The Fare is not registered");
         } finally {
             try {
                 session.close(); 
             } catch(HibernateException ex) {
-                throw new UserException("Unable to close session");
+                throw new CustomException("Unable to close session");
             }
         }       
     }

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse; 
-import javax.servlet.http.HttpSession; 
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;    
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;   
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ideas2it.luxitrip.exception.UserException;
+import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.Fare;
 import com.ideas2it.luxitrip.service.FareService;
 
@@ -40,7 +39,7 @@ public class FareController {
 	    try {
 	    	fareService.createFare(fare);
 	    	return new ModelAndView("Message", "message", "Fare Added Successfully" );
-	    } catch(UserException ex) {
+	    } catch(CustomException ex) {
 	    	return new ModelAndView("Message", "message", ex);
 	    }
 	}
@@ -56,7 +55,7 @@ public class FareController {
 		try {
 			fareService.updateFare(fare);
 			return new ModelAndView("Message", "message", "Fare Updates successfully");
-		} catch(UserException ex) {
+		} catch(CustomException ex) {
 			return new ModelAndView("Message", "message", ex);
 		}
 	}
@@ -71,7 +70,7 @@ public class FareController {
 		try {
 		    List<Fare> fares = fareService.retrieveFares();
 		    return new ModelAndView("userPage", "fares", fares);
-		} catch (UserException ex) {
+		} catch (CustomException ex) {
 			return new ModelAndView("error", "error", ex);
 		}
 	}
@@ -91,7 +90,7 @@ public class FareController {
         try {
         	Fare fare = fareService.retrieveFareById(fareId);
         	return new ModelAndView("updateUserForm", "fare", fare);
-        } catch(UserException ex) {
+        } catch(CustomException ex) {
         	return new ModelAndView("error", "error", ex);
         }
 	}
@@ -111,7 +110,7 @@ public class FareController {
 	    try {
 	    	fareService.deleteFare(fareId);
 	    	return new ModelAndView("Message", "message", "Fare deleted Successfully");
-	    } catch(UserException ex) {
+	    } catch(CustomException ex) {
 	    	return new ModelAndView("error", "error", ex);
 	    }
 	}

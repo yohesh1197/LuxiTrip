@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +21,10 @@ import com.ideas2it.luxitrip.service.StopService;
 public class StopController {
 	
     private static final Logger logger = Logger.getLogger(StopController.class);
+
     @Autowired
     private StopService stopService;
-	/**
+    /**
      * Method to add stop details
      * @param request-To get request from an user
      * @param response-To give a response about confirmation

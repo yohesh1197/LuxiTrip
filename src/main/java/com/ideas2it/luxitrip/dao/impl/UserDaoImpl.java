@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ideas2it.luxitrip.dao.UserDao;
-import com.ideas2it.luxitrip.exception.UserException;
+import com.ideas2it.luxitrip.exception.CustomException;
 import com.ideas2it.luxitrip.model.User;
 
 
@@ -27,9 +27,9 @@ public class UserDaoImpl implements UserDao {
 	/**
 	 * Method used to register the userDetail from user into the database 
 	 * @param user
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public void insertUser(User user)throws UserException {
+	public void insertUser(User user)throws CustomException {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
@@ -37,14 +37,14 @@ public class UserDaoImpl implements UserDao {
             session.save(user);
             transaction.commit();
         }  catch (HibernateException ex) {
-            throw new UserException("Unable to add " + user.getId() + " value" + ex);
+            throw new CustomException("Unable to add " + user.getId() + " value" + ex);
         } catch(PersistenceException ex) {
-        	throw new UserException("UserName is already exists please try another name");
+        	throw new CustomException("UserName is already exists please try another name");
 	    } finally {
             try {
                 session.close(); 
             } catch(Exception ex) {
-                throw new UserException("Unable to close session");
+                throw new CustomException("Unable to close session");
             }
         }
     } 
@@ -52,9 +52,9 @@ public class UserDaoImpl implements UserDao {
 	/**
 	 * Method used to update the user value in the userId from user into the database 
 	 * @param user
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-	public void updateUser(User user)throws UserException {
+	public void updateUser(User user)throws CustomException {
 	    Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -62,33 +62,33 @@ public class UserDaoImpl implements UserDao {
 		    session.saveOrUpdate(user);
 		    transaction.commit();
 		} catch(HibernateException ex) {
-			throw new UserException("Unable to update" + user.getId() + "values");
+			throw new CustomException("Unable to update" + user.getId() + "values");
 		} finally {
 			try {
 				session.close();
 			} catch(Exception ex) {
-				throw new UserException("Unable to close session");
+				throw new CustomException("Unable to close session");
 			}
 		}
 	}
 	
 	/** 
 	 * Method used to get the List of users from the database
-	 * @throws UserException
+	 * @throws CustomException
 	 */
-    public List<User> getUsers() throws UserException {
+    public List<User> getUsers() throws CustomException {
 	    List<User> users = new ArrayList<User>();
 	    Session session = sessionFactory.openSession();
 	    try{    
 	        Query query = session.createQuery("from User");
 	        users = query.list();
 	    } catch(HibernateException ex) {
-	        throw new UserException("Unable to get all users");
+	        throw new CustomException("Unable to get all users");
 	    } finally {
 	        try {
 	            session.close(); 
 	        } catch(HibernateException ex) {
-	            throw new UserException("Unable to close session");
+	            throw new CustomException("Unable to close session");
 	        }
 	    }
 	    return users;        
@@ -98,20 +98,20 @@ public class UserDaoImpl implements UserDao {
      * Method used to get the User detail by using the userId  
      * @param userId
      * @return the user detail 
-     * @throws UserException
+     * @throws CustomException
      */
-    public User getUserById(int id) throws UserException {
+    public User getUserById(int id) throws CustomException {
 	    Session session = sessionFactory.openSession();
     	try {
             User user = session.get(User.class, id); 
             return user;
         } catch(HibernateException ex) {
-            throw new UserException("The user is not registered");
+            throw new CustomException("The user is not registered");
         } finally {
             try {
                 session.close(); 
             } catch(HibernateException ex) {
-                throw new UserException("Unable to close session");
+                throw new CustomException("Unable to close session");
             }
         }       
     }
@@ -120,9 +120,9 @@ public class UserDaoImpl implements UserDao {
      * Method used to get the User detail by using the userName 
      * @param userName
      * @return the user detail 
-     * @throws UserException
+     * @throws CustomException
      */
-    public User getUserByName(String userName) throws UserException {
+    public User getUserByName(String userName) throws CustomException {
         User user = null;
         Session session = sessionFactory.openSession();
         try {
@@ -130,12 +130,12 @@ public class UserDaoImpl implements UserDao {
             query.setParameter("userName", userName);
             user = (User) query.uniqueResult();
         } catch(HibernateException ex) {
-            throw new UserException("The user is not registered");
+            throw new CustomException("The user is not registered");
         } finally {
             try {
                 session.close();
             } catch(HibernateException ex) {
-                throw new UserException("unable to close Session");
+                throw new CustomException("unable to close Session");
             }
         }
         return user;
@@ -145,9 +145,9 @@ public class UserDaoImpl implements UserDao {
      * Method used to soft delete the User detail from the database  
      * @param userId
      * @return the number of affected
-     * @throws UserException
+     * @throws CustomException
      */
-    public int deleteUser(int userId) throws UserException {
+    public int deleteUser(int userId) throws CustomException {
 	    Session session = sessionFactory.openSession();
 		Transaction transaction = null;
     	int noOfRowAffected = 0;
@@ -162,12 +162,12 @@ public class UserDaoImpl implements UserDao {
             if(null != transaction) {
                 transaction.rollback();
             }
-            throw new UserException("Unable to delete the given User");
+            throw new CustomException("Unable to delete the given User");
         } finally {
             try {
                 session.close(); 
             } catch(HibernateException e) {
-                throw new UserException("Unable to close session");
+                throw new CustomException("Unable to close session");
             }
         }
         return noOfRowAffected;
@@ -176,9 +176,9 @@ public class UserDaoImpl implements UserDao {
     /**
      * Method used to count the number of users in the database 
      * @return the number of Users
-     * @throws UserException
+     * @throws CustomException
      */
-    public long countUser() throws UserException {
+    public long countUser() throws CustomException {
 	    Session session = sessionFactory.openSession();
     	Transaction transaction = null;
     	long count = 0L;
@@ -187,12 +187,12 @@ public class UserDaoImpl implements UserDao {
     		Query query = session.createQuery("select count(u.id) from User u ");
             count = (Long) query.iterate().next();
         } catch(HibernateException ex) {
-            throw new UserException("Unable to count User");
+            throw new CustomException("Unable to count User");
         } finally {
             try {
                 session.close(); 
             } catch(HibernateException e) {
-                throw new UserException("Unable to close session");
+                throw new CustomException("Unable to close session");
             }
         }
         return count;        
