@@ -33,12 +33,12 @@ public class Midway {
         this.id = id;
     }
 
-    public Stop getStopID() {
+    public Stop getStop() {
         return stop;
     }
 
-    public void setStopID(Stop stopID) {
-        this.stop = stopID;
+    public void setStop(Stop stop) {
+        this.stop = stop;
     }
 
     public Date getTime() {
@@ -51,6 +51,6 @@ public class Midway {
 
     @Override
     public String toString() {
-        return "Midway [id=" + id + ", stopID=" + stop + ", time=" + time + "]";
+        return "Midway [id=" + id + ", stop=" + stop + ", time=" + time + "]";
     }
 }

@@ -3,15 +3,11 @@ package com.ideas2it.luxitrip.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import com.ideas2it.luxitrip.model.Bus;
 
@@ -29,9 +25,6 @@ public class Seat {
     
     @Column(name = "seat_number", length=20, nullable=true)
     private String seatNumber;
-    
-    @Column(name = "number", length=20, nullable=true)
-    private String number;
     
     @Column(name = "type", length=20, nullable=true)
     private String type;

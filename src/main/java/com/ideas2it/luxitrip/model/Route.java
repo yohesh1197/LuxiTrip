@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,8 +29,8 @@ public class Route {
     @ManyToOne
     private Stop destination;
     
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="schedule_id")
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name="route_id")
     private Set<Schedule> schedules;
 
     public int getId() {
@@ -67,6 +68,6 @@ public class Route {
     @Override
     public String toString() {
         return "Route [id=" + id + ", origin=" + origin + ", destination=" 
-                + destination + ", schedule=" + schedules + "]";
+                + destination + "]";
     }
 }

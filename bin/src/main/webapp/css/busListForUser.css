@@ -1,0 +1,117 @@
+body {
+background-image: url('bus.jpeg');
+background-size: cover;
+background-repeat: repeat;
+margin: 0px 25px 0px 25px;
+}
+
+.divbox {
+background : #e6e6e6;
+margin-left:70px;
+margin-top:25px;
+margin-right:0px;
+margin-bottom:10px;
+text-align: left;
+color: #4AB3C6;
+box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.25);
+border-radius: 5px;
+width: 90%;
+height:100px;
+padding: 5px 0px 5px 5px;
+display: inline-block;
+size : 19px;
+}
+.divfieldset {
+width:100%;
+height:100%;
+border: none;
+}
+.divfieldsetlegend {
+text-align: center;
+font-size:40px;
+color: white;
+padding-bottom: 5px;
+}
+.button {
+border: 2px;
+text-align: center;
+text-decoration: none;
+margin-left: 5px;
+margin-right: 5px;
+display: inline-block;
+font-size: 16px;
+transition-duration:  0.5s;
+color: black;
+cursor: pointer;
+width: 30px;
+height:30px;
+cursor: pointer;
+border-radius:100px;
+}
+.remove {
+background: transparent;
+box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.2);
+color: black;
+border: none;
+}
+.remove:hover {
+transform: scale(1.3);
+color: black;
+background: #ff4a3d;
+}
+
+.update {
+background: transparent;
+box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.2);
+color: black;
+border: none;
+}
+.update:hover {
+transform: scale(1.3);
+color: black;
+background: #f5f5f5;
+}
+
+.display {
+background: transparent;
+box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.2);
+color: black;
+border: none;
+}
+.display:hover {
+transform: scale(1.3);
+color: black;
+background: #2da7ed;
+}
+.font{
+font-size:20px;
+}
+.one {
+display: inline-block;
+}
+
+.two {
+padding-left : 40px;
+}
+.form-btn {
+
+	height:50px;
+	margin: 0px;
+	align-items : right;
+}
+
+.submit-btn {
+    text-align: center;    
+    margin: 0px;
+    border: none;
+    background: rgb(74, 179, 198);
+    text-transform: capitalize;
+    display: flex;
+    border-radius: 2px;
+    width: 124;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    transition: all 0.2s linear;
+}
