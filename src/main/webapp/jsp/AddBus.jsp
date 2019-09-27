@@ -4,7 +4,7 @@
 
 <html>
     <head>
-        <title>Add Bus</title>
+        <title>Add Buss</title>
         <link rel = "stylesheet" type = "text/css" href = "/css/add.css">
     </head>
     <body>
