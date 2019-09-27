@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,8 +36,8 @@ public class Schedule {
     @ManyToOne
     private User driver;
     
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="midway_id")
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name="schedule_id")
     private List<Midway> midways;
     
     public int getId() {
@@ -63,19 +64,19 @@ public class Schedule {
         this.arrivalTime = arrivalTime;
     }
 
-    public Bus getBusID() {
+    public Bus getBus() {
         return bus;
     }
 
-    public void setBusID(Bus busID) {
-        this.bus = busID;
+    public void setBus(Bus bus) {
+        this.bus = bus;
     }
 
-    public User getDriverId() {
+    public User getDriver() {
         return driver;
     }
 
-    public void setDriverId(User driver) {
+    public void setDriver(User driver) {
         this.driver = driver;
     }
 
@@ -90,8 +91,7 @@ public class Schedule {
     @Override
     public String toString() {
         return "Schedule [id=" + id + ", departureTime=" + departureTime + 
-                ", arrivalTime=" + arrivalTime + ", busID=" + bus + 
-                ", driverId=" + driver + ", midways=" + midways + "]";
+                ", arrivalTime=" + arrivalTime + "]";
     }
 
 

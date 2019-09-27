@@ -71,7 +71,7 @@ public class BusController {
     @RequestMapping("/displayAllBuses")
     public ModelAndView displayAllBuses(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, ServletException {
-        ModelAndView model = new ModelAndView("DisplayBuses");
+        ModelAndView model = new ModelAndView("adminpage");
         try {
             List<Bus> buses = busService.retrieveAllBuses();
             model.addObject("buses", buses);
